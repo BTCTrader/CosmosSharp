@@ -23,7 +23,7 @@ namespace CosmosSharp
                     request.AddHeader(key, value);
                 }
             }
-            var response = await client.ExecuteGetTaskAsync(request, cancellationToken);
+            var response = await client.ExecuteGetAsync(request, cancellationToken);
 
             if (response.StatusCode == HttpStatusCode.NotFound)
             {
