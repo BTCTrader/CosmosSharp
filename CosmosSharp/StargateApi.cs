@@ -60,7 +60,7 @@ namespace CosmosSharp
             return response;
         }
 
-        public async Task<BroadcastTxResponse> BroadCastTx<TMsg>(StdTx<TMsg> signedTx, BroadcastMode mode, CancellationToken cancellationToken)
+        public Task<BroadcastTxResponse> BroadCastTx<TMsg>(StdTx<TMsg> signedTx, BroadcastMode mode, CancellationToken cancellationToken)
         {
             // TODO: Parameters and endpoint will be updated.
             // Details in "feature/cosmos-grpc-research" branch.
