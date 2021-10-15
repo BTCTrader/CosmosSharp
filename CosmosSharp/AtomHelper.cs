@@ -9,7 +9,7 @@ namespace CosmosSharp
 {
     public static class DenomTypes
     {
-        public static string TestnetCoin = "umuon";
+        public static string TestnetCoin = "uphoton";
         public static string MainnetCoin = "uatom";
     }
     
