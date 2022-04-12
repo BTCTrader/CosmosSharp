@@ -33,9 +33,30 @@ namespace CosmosSharp
             return await _httpHandler.GetJsonAsync<AccountModel>(url, _config.HeaderKeyValues, cancellationToken);
         }
 
-        public async Task<BalanceResponse> GetAccountBalance(string accountName, string denom, CancellationToken cancellationToken)
+        /// <summary>
+        /// Receives account balance via cosmos-sdk <b>before v0.44.4</b>. See more details about change in <a href="https://github.com/cosmos/cosmos-sdk/pull/10394#discussion_r734448254"><i>query account balance endpoint fix</i></a> and <a href="https://github.com/cosmos/cosmos-sdk/releases/tag/v0.44.4"><i>release notes</i></a>.
+        /// </summary>
+        /// <param name="accountName">address</param>
+        /// <param name="denom">denom or IBC denom</param>
+        /// <param name="cancellationToken"></param>
+        /// <returns></returns>
+        public async Task<BalanceResponse> GetAccountBalanceLegacy(string accountName, string denom, CancellationToken cancellationToken)
         {
             var url = $"{_config.HttpEndpoint}/cosmos/bank/v1beta1/balances/{accountName}/{denom}";
+            return await _httpHandler.GetJsonAsync<BalanceResponse>(url, _config.HeaderKeyValues, cancellationToken);
+        }
+        
+        /// <summary>
+        /// Receives account balance via cosmos-sdk <b>as from v0.44.4</b>. See more details about <a href="https://github.com/cosmos/cosmos-sdk/pull/10394#discussion_r734448254"><i>query account balance endpoint fix</i></a> and <a href="https://github.com/cosmos/cosmos-sdk/releases/tag/v0.44.4"><i>release notes</i></a>.
+        /// </summary>
+        /// <param name="accountName">address</param>
+        /// <param name="denom">denom or IBC denom</param>
+        /// <param name="cancellationToken"></param>
+        /// <returns></returns>
+        public async Task<BalanceResponse> GetAccountBalance(string accountName, string denom, CancellationToken cancellationToken)
+        {
+            // grpc-gateway query account balance by IBC denom had an incorrect endpoint
+            var url = $"{_config.HttpEndpoint}/cosmos/bank/v1beta1/balances/{accountName}/by_denom?denom={denom}";
             return await _httpHandler.GetJsonAsync<BalanceResponse>(url, _config.HeaderKeyValues, cancellationToken);
         }
 
