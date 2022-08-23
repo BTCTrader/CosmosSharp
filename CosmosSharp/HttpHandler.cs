@@ -15,7 +15,7 @@ namespace CosmosSharp
         {
             // TODO: RestClient --> HttpClient
             var client = new RestClient(url);
-            var request = new RestRequest(Method.GET);
+            var request = new RestRequest();
             if (headerKeyValues != null && headerKeyValues.Count > 0)
             {
                 foreach (var (key, value) in headerKeyValues)
@@ -38,11 +38,11 @@ namespace CosmosSharp
             return result;
         }
 
-        Task<TResponseData> IHttpHandler.PostJsonAsync<TResponseData, TRequestData>(string url, Dictionary<string, string> headerKeyValues, TRequestData requestBody)
+        async Task<TResponseData> IHttpHandler.PostJsonAsync<TResponseData, TRequestData>(string url, Dictionary<string, string> headerKeyValues, TRequestData requestBody)
         {
             // TODO: RestClient --> HttpClient
             var client = new RestClient(url);
-            var request = new RestRequest(Method.POST);
+            var request = new RestRequest();
             var body= JsonConvert.SerializeObject(requestBody);
             if (headerKeyValues != null && headerKeyValues.Count > 0)
             {
@@ -52,7 +52,7 @@ namespace CosmosSharp
                 }
             }
             request.AddJsonBody(body);
-            var response = client.Execute(request);
+            var response = await client.ExecutePostAsync(request);
 
             if (response.StatusCode != HttpStatusCode.OK)
             {
@@ -62,10 +62,10 @@ namespace CosmosSharp
             if(response.Content == null) throw new Exception($"Response is null. Status code: {response.StatusCode}");
             
             var result = JsonConvert.DeserializeObject<TResponseData>(response.Content);
-            return Task.FromResult(result);
+            return result;
         }
 
-        private Exception GetApiError(Uri BaseUrl, IRestRequest request, IRestResponse response)
+        private Exception GetApiError(Uri BaseUrl, RestRequest request, RestResponse response)
         {
             //Get the values of the parameters passed to the API
             string parameters = string.Join(", ", request.Parameters.Select(x => x.Name.ToString() + "=" + ((x.Value == null) ? "NULL" : x.Value)).ToArray());
