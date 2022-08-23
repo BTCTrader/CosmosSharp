@@ -11,7 +11,7 @@
 		<Copyright>Copyright (c) 2021 BTCTrader</Copyright>
 		<PackageId>BTCTrader.CosmosSharp</PackageId>
 		<Product>BTCTrader.CosmosSharp</Product>
-		<Version>1.1.2</Version>
+		<Version>1.1.3</Version>
 	</PropertyGroup>
 
 	<ItemGroup>
@@ -19,7 +19,7 @@
 		<PackageReference Include="Microsoft.AspNetCore.Mvc.NewtonsoftJson" Version="3.0.0" />
 		<PackageReference Include="NBitcoin.Secp256k1" Version="1.0.1" />
 		<PackageReference Include="NBitcoin" Version="5.0.27" />
-		<PackageReference Include="RestSharp" Version="106.11.7" />
+		<PackageReference Include="RestSharp" Version="108.0.1" />
 	</ItemGroup>
 
 </Project>
