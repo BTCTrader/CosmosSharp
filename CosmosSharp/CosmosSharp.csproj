@@ -11,7 +11,7 @@
 		<Copyright>Copyright (c) 2021 BTCTrader</Copyright>
 		<PackageId>BTCTrader.CosmosSharp</PackageId>
 		<Product>BTCTrader.CosmosSharp</Product>
-		<Version>1.1.2</Version>
+		<Version>1.1.3</Version>
 	</PropertyGroup>
 
 	<ItemGroup>
